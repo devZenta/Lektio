@@ -22,6 +22,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  extractions   ExtractionLog[]
 
   @@unique([email])
   @@map("user")
@@ -73,4 +74,28 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum ExtractionStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model ExtractionLog {
+  id            String            @id @default(uuid())
+  jobId         String            @unique
+  userId        String
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status        ExtractionStatus
+  inputFilename String
+  result        Json?
+  errorMessage  String?
+
+
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("extraction_log")
 }

@@ -1,0 +1,8 @@
+import type { PrismaClient } from "../generated/prisma/client.js";
+import type auth from "../lib/auth.js";
+
+export type AppVariables = {
+    prisma: PrismaClient;
+    user: typeof auth.$Infer.Session.user | null
+    session: typeof auth.$Infer.Session.session | null
+};

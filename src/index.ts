@@ -1,14 +1,5 @@
 import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
-import authRouter from './routes/auth.js';
-
-const app = new Hono()
-
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
-
-app.route('/auth', authRouter)
+import app from './app.js';
 
 serve({
   fetch: app.fetch,

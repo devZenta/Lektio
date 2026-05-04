@@ -1,16 +1,18 @@
-import { Hono } from 'hono'
-import authRouter from './routes/authRoutes.js';
-import healthRouter from './routes/healthRoutes.js';
-import extractRouter from './routes/extractRoutes.js';
-import { type AppVariables } from './types/context.types.js';
-import withPrisma from './middlewares/prismaMiddleware.js';
+import { Hono } from "hono";
+import authRouter from "./routes/authRoutes.js";
+import healthRouter from "./routes/healthRoutes.js";
+import extractRouter from "./routes/extractRoutes.js";
+import metricsRouter from "./routes/metricsRoute.js";
+import { type AppVariables } from "./types/context.types.js";
+import withPrisma from "./middlewares/prismaMiddleware.js";
 
-const app = new Hono<{ Variables: AppVariables }>()
+const app = new Hono<{ Variables: AppVariables }>();
 
-app.use('*', withPrisma)
+app.use("*", withPrisma);
 
-app.route('/auth', authRouter)
-app.route('/health', healthRouter)
-app.route('/extract', extractRouter)
+app.route("/health", healthRouter);
+app.route("/metrics", metricsRouter);
+app.route("/auth", authRouter);
+app.route("/extract", extractRouter);
 
-export default app
+export default app;
